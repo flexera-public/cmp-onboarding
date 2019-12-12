@@ -80,7 +80,7 @@ if ($currentChildAccounts.name -notcontains $subscriptionName){
         -Headers @{ "X-API-Version"="1.5"; "Authorization"="Bearer $($token.access_token)"; "X-Account"=$masterAccountId }
 }
 
-$accountId = (($currentChildAccounts | where name -eq $subscriptionName).links | where rel -eq self).href.split("/")[3]
+$accountId = (($currentChildAccounts | Where-Object name -eq $subscriptionName).links | Where-Object rel -eq self).href.split("/")[3]
 Write-Output "RS Child Account ID: $accountId"
 
 $currentCloudAccounts = Invoke-RestMethod -Method Get `
