@@ -2,7 +2,11 @@ param(
   $GRS_ACCOUNT = "",
   $REFRESH_TOKEN = "",
   $RS_HOST = "us-3.rightscale.com",
-  $CSV_PATH = ""
+  $CSV_PATH = "",
+  $PROXY_URI,
+  $PROXY_USERNAME,
+  $PROXY_PASSWORD,
+  $PROXY_DOMAIN
 )
 
 #Mandatory CSV headers: project_id,bc1,bc2,bc3
@@ -140,6 +144,19 @@ $oauthResult = Invoke-RestMethod -Method Post -Uri $oauthUri -Headers $oauthHead
 $accessToken = $oauthResult.access_token
 
 $rules = import-csv $CSV_PATH
+
+if ($PROXY_URI){
+  if ($PROXY_USERNAME -and $PROXY_PASSWORD){
+    [system.net.webrequest]::defaultwebproxy = New-Object system.net.webproxy($PROXY_URI)
+    $CredCache = [System.Net.CredentialCache]::new()
+    $NetCreds = [System.Net.NetworkCredential]::new($PROXY_USERNAME,$PROXY_PASSWORD,$PROXY_DOMAIN)
+    $CredCache.Add($PROXY_URI, "Basic", $NetCreds)
+  } else {
+    [system.net.webrequest]::defaultwebproxy = New-Object system.net.webproxy($PROXY_URI)
+    [system.net.webrequest]::defaultwebproxy.credentials = [System.Net.CredentialCache]::DefaultNetworkCredentials
+    [system.net.webrequest]::defaultwebproxy.BypassProxyOnLocal = $true
+  }
+}
 
 #Index BCs
 $existingBCs = Index-BCs -ACCESS_TOKEN $accessToken -GRS_ACCOUNT $GRS_ACCOUNT
