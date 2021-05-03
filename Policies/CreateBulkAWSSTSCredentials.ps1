@@ -93,6 +93,7 @@ if ($null -ne $grsResponse) {
 }
 else {
   Write-Output "Error retrieveing org details"
+  EXIT 1
 }
 
 $existingCreds = Index-Credentials -AccessToken $accessToken -Shard $shard -ProjectId $masterAccount
