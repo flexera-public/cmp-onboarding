@@ -1,11 +1,11 @@
 param(
-  $FlexeraOrgId = "",  
-  $FlexeraRefreshToken = "",
-  $IncidentEmailAddresses = @(),
+  $FlexeraOrgId,
+  $FlexeraRefreshToken,
+  [array]$IncidentEmailAddresses = @(),
   $CredPrefix = "",
   $PolicyDryRun = $true,
   $TerminateExistingPolicy = $true,
-  $SkipFirstPolicyVerification = $false,
+  $SkipFirstPolicyVerification = $true,
   $AWSRegions = @(
       "us-east-2",
       "us-east-1",
@@ -33,6 +33,7 @@ param(
 
 # https://github.com/flexera/policy_templates/tree/master/cost/aws/unused_volumes
 $policy_name = "AWS Unused Volumes"
+$policy_provider = "aws"
 $policy_frequency = "weekly"
 $policy_options = @(
   [ordered]@{
@@ -76,10 +77,11 @@ $policy_options = @(
     "value" = "Yes"
   }
 )
-./ApplyPolicy.ps1 -FlexeraOrgId $FlexeraOrgId -FlexeraRefreshToken $FlexeraRefreshToken -CredPrefix $CredPrefix -PolicyName $policy_name -PolicyFrequency $policy_frequency -PolicyOptions $policy_options -PolicyDryRun $PolicyDryRun -TerminateExistingPolicy $TerminateExistingPolicy -SkipFirstPolicyVerification $SkipFirstPolicyVerification
+./ApplyPolicy.ps1 -FlexeraOrgId $FlexeraOrgId -FlexeraRefreshToken $FlexeraRefreshToken -CredPrefix $CredPrefix -PolicyName $policy_name -PolicyProvider $policy_provider -PolicyFrequency $policy_frequency -PolicyOptions $policy_options -PolicyDryRun $PolicyDryRun -TerminateExistingPolicy $TerminateExistingPolicy -SkipFirstPolicyVerification $SkipFirstPolicyVerification
 
 # https://github.com/flexera/policy_templates/tree/master/security/aws/rds_publicly_accessible
 $policy_name = "AWS Publicly Accessible RDS Instances"
+$policy_provider = "aws"
 $policy_frequency = "weekly"
 $policy_options = @(
   [ordered]@{
@@ -103,10 +105,11 @@ $policy_options = @(
     "value" = @()
   }
 )
-./ApplyPolicy.ps1 -FlexeraOrgId $FlexeraOrgId -FlexeraRefreshToken $FlexeraRefreshToken -CredPrefix $CredPrefix -PolicyName $policy_name -PolicyFrequency $policy_frequency -PolicyOptions $policy_options -PolicyDryRun $PolicyDryRun -TerminateExistingPolicy $TerminateExistingPolicy -SkipFirstPolicyVerification $SkipFirstPolicyVerification
+./ApplyPolicy.ps1 -FlexeraOrgId $FlexeraOrgId -FlexeraRefreshToken $FlexeraRefreshToken -CredPrefix $CredPrefix -PolicyName $policy_name -PolicyProvider $policy_provider -PolicyFrequency $policy_frequency -PolicyOptions $policy_options -PolicyDryRun $PolicyDryRun -TerminateExistingPolicy $TerminateExistingPolicy -SkipFirstPolicyVerification $SkipFirstPolicyVerification
 
 # https://github.com/flexera/policy_templates/tree/master/cost/aws/idle_compute_instances
 $policy_name = "AWS Idle Compute Instances"
+$policy_provider = "aws"
 $policy_frequency = "weekly"
 $policy_options = @(
   [ordered]@{
@@ -140,10 +143,11 @@ $policy_options = @(
     "value" = @()
   }
 )
-./ApplyPolicy.ps1 -FlexeraOrgId $FlexeraOrgId -FlexeraRefreshToken $FlexeraRefreshToken -CredPrefix $CredPrefix -PolicyName $policy_name -PolicyFrequency $policy_frequency -PolicyOptions $policy_options -PolicyDryRun $PolicyDryRun -TerminateExistingPolicy $TerminateExistingPolicy -SkipFirstPolicyVerification $SkipFirstPolicyVerification
+./ApplyPolicy.ps1 -FlexeraOrgId $FlexeraOrgId -FlexeraRefreshToken $FlexeraRefreshToken -CredPrefix $CredPrefix -PolicyName $policy_name -PolicyProvider $policy_provider -PolicyFrequency $policy_frequency -PolicyOptions $policy_options -PolicyDryRun $PolicyDryRun -TerminateExistingPolicy $TerminateExistingPolicy -SkipFirstPolicyVerification $SkipFirstPolicyVerification
 
 # https://github.com/flexera/policy_templates/tree/master/cost/aws/rds_instance_cloudwatch_utilization
 $policy_name = "AWS Rightsize RDS Instances"
+$policy_provider = "aws"
 $policy_frequency = "weekly"
 $policy_options = @(
   [ordered]@{
@@ -177,10 +181,11 @@ $policy_options = @(
     "value" = @()
   }
 )
-./ApplyPolicy.ps1 -FlexeraOrgId $FlexeraOrgId -FlexeraRefreshToken $FlexeraRefreshToken -CredPrefix $CredPrefix -PolicyName $policy_name -PolicyFrequency $policy_frequency -PolicyOptions $policy_options -PolicyDryRun $PolicyDryRun -TerminateExistingPolicy $TerminateExistingPolicy -SkipFirstPolicyVerification $SkipFirstPolicyVerification
+./ApplyPolicy.ps1 -FlexeraOrgId $FlexeraOrgId -FlexeraRefreshToken $FlexeraRefreshToken -CredPrefix $CredPrefix -PolicyName $policy_name -PolicyProvider $policy_provider -PolicyFrequency $policy_frequency -PolicyOptions $policy_options -PolicyDryRun $PolicyDryRun -TerminateExistingPolicy $TerminateExistingPolicy -SkipFirstPolicyVerification $SkipFirstPolicyVerification
 
 # https://github.com/flexera/policy_templates/tree/master/compliance/azure/azure_long_stopped_instances
-$policy_name = "AWS Long stopped Instances"
+$policy_name = "AWS Long-stopped Instances"
+$policy_provider = "aws"
 $policy_frequency = "weekly"
 $policy_options = @(
   [ordered]@{
@@ -209,10 +214,11 @@ $policy_options = @(
     "value" = @()
   }
 )
-./ApplyPolicy.ps1 -FlexeraOrgId $FlexeraOrgId -FlexeraRefreshToken $FlexeraRefreshToken -CredPrefix $CredPrefix -PolicyName $policy_name -PolicyFrequency $policy_frequency -PolicyOptions $policy_options -PolicyDryRun $PolicyDryRun -TerminateExistingPolicy $TerminateExistingPolicy -SkipFirstPolicyVerification $SkipFirstPolicyVerification
+./ApplyPolicy.ps1 -FlexeraOrgId $FlexeraOrgId -FlexeraRefreshToken $FlexeraRefreshToken -CredPrefix $CredPrefix -PolicyName $policy_name -PolicyProvider $policy_provider -PolicyFrequency $policy_frequency -PolicyOptions $policy_options -PolicyDryRun $PolicyDryRun -TerminateExistingPolicy $TerminateExistingPolicy -SkipFirstPolicyVerification $SkipFirstPolicyVerification
 
 # https://github.com/flexera/policy_templates/tree/master/cost/aws/elb/clb_unused
 $policy_name = "AWS Delete Unused Classic Load Balancers"
+$policy_provider = "aws"
 $policy_frequency = "weekly"
 $policy_options = @(
   [ordered]@{
@@ -236,4 +242,4 @@ $policy_options = @(
     "value" = @()
   }
 )
-./ApplyPolicy.ps1 -FlexeraOrgId $FlexeraOrgId -FlexeraRefreshToken $FlexeraRefreshToken -CredPrefix $CredPrefix -PolicyName $policy_name -PolicyFrequency $policy_frequency -PolicyOptions $policy_options -PolicyDryRun $PolicyDryRun -TerminateExistingPolicy $TerminateExistingPolicy -SkipFirstPolicyVerification $SkipFirstPolicyVerification
+./ApplyPolicy.ps1 -FlexeraOrgId $FlexeraOrgId -FlexeraRefreshToken $FlexeraRefreshToken -CredPrefix $CredPrefix -PolicyName $policy_name -PolicyProvider $policy_provider -PolicyFrequency $policy_frequency -PolicyOptions $policy_options -PolicyDryRun $PolicyDryRun -TerminateExistingPolicy $TerminateExistingPolicy -SkipFirstPolicyVerification $SkipFirstPolicyVerification
