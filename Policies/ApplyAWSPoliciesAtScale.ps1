@@ -5,7 +5,7 @@ param(
   $CredPrefix = "",
   $PolicyDryRun = $true,
   $TerminateExistingPolicy = $true,
-  $SkipFirstPolicyVerification = $true,
+  $SkipFirstPolicyVerification = $false,
   $AWSRegions = @(
       "us-east-2",
       "us-east-1",
