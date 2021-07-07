@@ -229,13 +229,13 @@ else {
         Write-Host "Applied Policy with the name '$modified_policyName' already exists (Count: $pol_count)! Terminating..."
         foreach($policy in $existingPolicy) {
           $policyResult = Terminate-AppliedPolicy -Shard $FlexeraProjectShard -AccessToken $accessToken -FlexeraOrgId $FlexeraOrgId -AggregateId $policy.policy_aggregate_id
-          Write-Host "Sleeping 5 seconds..."
+          Write-Host "Sleeping 1 seconds..."
           Start-Sleep -Seconds 1
         }
       }
 
       $policyResult = Apply-Policy -Shard $FlexeraProjectShard -AccessToken $accessToken -FlexeraProjectId $FlexeraProjectId -FlexeraOrgId $FlexeraOrgId -Severity $severity -Frequency $PolicyFrequency -CredId $cred.id -PolicyName $modified_policyName -TemplateHref $TemplateHref -Options $PolicyOptions -DryRun $PolicyDryRun
-      Write-Host "Sleeping 5 seconds..."
+      Write-Host "Sleeping 1 seconds..."
       Start-Sleep -Seconds 1
     }
   }
