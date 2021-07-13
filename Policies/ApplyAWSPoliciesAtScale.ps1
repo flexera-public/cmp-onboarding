@@ -760,7 +760,3 @@ $policy_options = @(
   }
 )
 ./ApplyPolicy.ps1 -FlexeraOrgId $FlexeraOrgId -FlexeraRefreshToken $FlexeraRefreshToken -CredPrefix $CredPrefix -PolicyName $policy_name -PolicyProvider $policy_provider -PolicyFrequency $policy_frequency -PolicyOptions $policy_options -PolicyDryRun $PolicyDryRun -TerminateExistingPolicy $TerminateExistingPolicy -SkipFirstPolicyVerification $SkipFirstPolicyVerification
-
-# 
-
-
