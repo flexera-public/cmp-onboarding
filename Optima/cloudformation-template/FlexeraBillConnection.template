@@ -22,7 +22,7 @@ Metadata:
       - Label:
           default: "Parameters related to permissions on the IAM Role that is created"
         Parameters:
-          - paramS3BillingBucket
+          - paramBillingBucket
           - paramPermsAttachExistingPolicies
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudformation-interface-parameterlabel.html
     ParameterLabels:
@@ -36,7 +36,7 @@ Metadata:
         default: "Flexera Organization ID"
       paramFlexeraZone:
         default: "Flexera Zone"
-      paramS3BillingBucket:
+      paramBillingBucket:
         default: "S3 Bucket containing AWS Billing Data"
       paramPermsAttachExistingPolicies:
         default: "Additional IAM Permission Policies for IAM Role"
@@ -64,14 +64,14 @@ Parameters:
   paramRoleName:
     Description: Name of the the IAM Role that will be created. If you plan to create more than one IAM Role (i.e. one for each Policy Template, or to trust multiple Orgs) you will need to modify this to prevent naming conflict.
     Type: String
-    Default: FlexeraAutomationAccessRole
+    Default: FlexeraCloudCostAccessRole
     # IAM Role Name Max Length is 64chars
     MaxLength: 64
   paramRolePath:
     Description: Path for the IAM Role that will be created. Generally does not need to be modified.
     Type: String
     Default: /
-  paramS3BillingBucket:
+  paramBillingBucket:
     Description: 'The name of the S3 bucket where your Hourly Cost and Usage Report is stored.'
     Type: String
   paramPermsAttachExistingPolicies:
@@ -83,8 +83,7 @@ Parameters:
     ConstraintDescription: 'Malformed IAM Policy ARN.  Must match pattern ^((arn:aws:iam::(\d{12}|aws)?:policy\/[\w+=,.@-]{1,128})(,)?)*$'
 
 Conditions:
-  CreatePolicyAWSBillConnection: true
-  ValueProvidedparamPermsAttachExistingPolicies: !Not
+  AttachExistingPolicies: !Not
     - !Equals
       - !Ref paramPermsAttachExistingPolicies
       - ""
@@ -137,14 +136,13 @@ Resources:
                 "sts:ExternalId": !Ref paramFlexeraOrgId
       # ManagedPolicyArns value is conditional based on input paramPermsAttachExistingPolicies
       ManagedPolicyArns: !If
-        - ValueProvidedparamPermsAttachExistingPolicies
+        - AttachExistingPolicies
         # If value is provided for paramPermsAttachExistingPolicies, split that comma-separated list into a list object
         - !Split [ ",", !Ref paramPermsAttachExistingPolicies ]
         # Provide a null value if nothing provided for paramPermsAttachExistingPolicies
         - !Ref AWS::NoValue
   iamPolicyAWSBillConnection:
     Type: "AWS::IAM::Policy"
-    Condition: CreatePolicyAWSBillConnection
     Properties:
       PolicyName: !Join
         - "_"
@@ -166,18 +164,20 @@ Resources:
               - PermissionMap
               - AWSBillConnection
               - bucket
-            Resource: !Join
-              - "arn:aws:s3:::"
-              - !Ref paramS3BillingBucket
+            Resource: !Join 
+              - ''
+              - - "arn:aws:s3:::"
+                - !Ref paramBillingBucket
           - Effect: Allow
             Action: !FindInMap
               - PermissionMap
               - AWSBillConnection
               - objects
             Resource: !Join
-              - "arn:aws:s3:::"
-              - !Ref paramS3BillingBucket
-              - "/*"
+              - ''
+              - - "arn:aws:s3:::"
+                - !Ref paramBillingBucket
+                - "/*"
           
 Outputs:
   iamRoleArn:
