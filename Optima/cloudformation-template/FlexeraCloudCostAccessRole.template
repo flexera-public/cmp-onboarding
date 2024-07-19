@@ -105,8 +105,8 @@ Mappings:
         - "organizations:List*"
         - "ce:GetReservationUtilization"
         - "ce:GetSavingsPlansUtilization"
-        - "ce:GetReservationPurchaseRecommendation",
-        - "ce:GetSavingsPlansPurchaseRecommendation",
+        - "ce:GetReservationPurchaseRecommendation"
+        - "ce:GetSavingsPlansPurchaseRecommendation"
                 
       bucket:
         - "s3:ListBucket"
