@@ -108,7 +108,8 @@ Mappings:
         - "ce:GetSavingsPlansUtilizationDetails"
         - "ce:GetReservationPurchaseRecommendation"
         - "ce:GetSavingsPlansPurchaseRecommendation"
-                
+        - "savingsplans:DescribeSavingsPlans"
+
       bucket:
         - "s3:ListBucket"
         - "s3:GetBucketLocation"
