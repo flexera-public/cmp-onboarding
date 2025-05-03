@@ -105,6 +105,7 @@ Mappings:
         - "organizations:List*"
         - "ce:GetReservationUtilization"
         - "ce:GetSavingsPlansUtilization"
+        - "ce:GetSavingsPlansUtilizationDetails"
         - "ce:GetReservationPurchaseRecommendation"
         - "ce:GetSavingsPlansPurchaseRecommendation"
                 
